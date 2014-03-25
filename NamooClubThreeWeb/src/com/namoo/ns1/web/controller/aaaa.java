@@ -5,5 +5,6 @@ public class aaaa {
 		//
 		int a = 10;
 		System.out.println("try4");
+		System.out.println("try4");
 	}
 }
