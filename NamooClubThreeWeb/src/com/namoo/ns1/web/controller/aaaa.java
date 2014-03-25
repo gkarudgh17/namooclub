@@ -5,5 +5,6 @@ public class aaaa {
 		//
 		System.out.println("try");
 		System.out.println("try2");
+		System.out.println("try3");
 	}
 }
