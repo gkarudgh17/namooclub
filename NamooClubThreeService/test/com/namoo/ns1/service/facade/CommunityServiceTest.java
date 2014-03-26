@@ -89,7 +89,8 @@ public class CommunityServiceTest {
 	private void createCommunity() {
 		//
 		String password = "asdf1234";
-		communityService.registCommunity(communityName, adminName, adminEmail, password);
+		String description = "....";
+		communityService.registCommunity(communityName, description, adminName, adminEmail, password);
 	}
 
 }

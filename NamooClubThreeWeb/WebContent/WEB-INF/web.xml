@@ -3,8 +3,65 @@
   <display-name>NamooClubThreeWeb</display-name>
 
 	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/views/common/errorPage.jsp</location>
+	</error-page>
+<!-- 
+	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/common/error_404.jsp</location>
 	</error-page>
+ -->	
 
+	<!--======================================================================== 
+		Filter Definition 
+	=========================================================================-->
+	
+	<filter>
+		<filter-name>ContextPathFilter</filter-name>
+		<filter-class>com.namoo.ns1.web.filter.ContextPathFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>com.namoo.ns1.web.filter.CharacterEncodingFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>OriginRequestURLFilter</filter-name>
+		<filter-class>com.namoo.ns1.web.filter.OriginRequestURLFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>JspViewResolverFilter</filter-name>
+		<filter-class>com.namoo.ns1.web.filter.JspViewResolverFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>ContextPathFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>OriginRequestURLFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>ContextPathFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>OriginRequestURLFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>JspViewResolverFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+	
 </web-app>

@@ -1,6 +1,7 @@
 package dom.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.namoo.ns1.common.Identifiable;
@@ -9,8 +10,10 @@ public class Community implements Identifiable {
 
 	private static final long serialVersionUID = -1649818789572216203L;
 	
+	private String id;
 	private String name;
 	private String description;
+	private Date openDate;
 	
 	private CommunityManager manager;
 	private List<CommunityMember> members;
@@ -19,15 +22,18 @@ public class Community implements Identifiable {
 	// constructors
 	
 	/**
-	 * 
+	 * @param id
 	 * @param communityName
+	 * @param description
 	 * @param admin
 	 */
-	public Community(String communityName, String description, SocialPerson admin){
+	public Community(String id, String communityName, String description, SocialPerson admin){
 		//
+		this.id = id;
 		this.name = communityName;
 		this.description = description;
 		this.members = new ArrayList<CommunityMember>();
+		this.openDate = new Date();
 		
 		setManager(admin);
 		addMember(admin);
@@ -35,6 +41,10 @@ public class Community implements Identifiable {
 
 	//--------------------------------------------------------------------------
 	// getter/setter
+	
+	public String getId() {
+		return id;
+	}
 	
 	public String getName() {
 		return name;
@@ -59,7 +69,15 @@ public class Community implements Identifiable {
 	public List<CommunityMember> getMembers() {
 		return members;
 	}
-
+	
+	public Date getOpenDate() {
+		return openDate;
+	}
+	
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
+	}
+	
 	//--------------------------------------------------------------------------
 	// public methods
 	
@@ -96,7 +114,7 @@ public class Community implements Identifiable {
 	@Override
 	public String getOId() {
 		// 
-		return name;
+		return id;
 	}
 
 	public void removeMember(String email) {
@@ -110,5 +128,16 @@ public class Community implements Identifiable {
 		if (found != null) {
 			members.remove(found);
 		}
+	}
+
+	@Override
+	public String toString() {
+		// 
+		StringBuilder builder = new StringBuilder();
+		builder.append("id:" + id);
+		builder.append(",name:" + name);
+		builder.append(",email:" + description);
+		
+		return builder.toString();
 	}
 }

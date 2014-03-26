@@ -7,8 +7,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(urlPatterns = {"/*"})
-public class CharacterEncodingFilter extends SimpleFilterAdapter {
+@WebFilter(filterName = "CharacterEncodingFilter", urlPatterns = {"/*"})
+public class CharacterEncodingFilter extends AbstractFilter {
 
 	private static final String ENCODING = "UTF-8";
 
