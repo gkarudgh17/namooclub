@@ -74,6 +74,11 @@
             <a href="${linkURL}" class="btn btn-large btn-default">확인</a>
         </div>
     </div>
+
+    <!-- footer -->
+    <div class="info-footer">
+        <p>© NamooSori 2014.</p>
+    </div>    
 </div>
 </body>
 </html>
