@@ -1,4 +1,4 @@
-package com.namoo.ns1.web.controller.community;
+package com.namoo.ns1.web.controller.club;
 
 import java.io.IOException;
 
@@ -7,17 +7,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.CommunityService;
+import com.namoo.ns1.service.facade.ClubService;
 import com.namoo.ns1.service.factory.NamooClubServiceFactory;
 import com.namoo.ns1.web.controller.common.DefaultController;
 import com.namoo.ns1.web.controller.common.PageTranfer;
 import com.namoo.ns1.web.session.LoginRequired;
+import com.namoo.ns1.web.session.SessionManager;
 
-import dom.entity.Community;
-
-@WebServlet("/community/withdrawal/confirm.do")
+@WebServlet("/club/withdrawal/process.do")
 @LoginRequired
-public class CommWithdrawalPageController extends DefaultController {
+public class ClubWithdrawalProcController extends DefaultController {
 	//
 	private static final long serialVersionUID = 8075594201606793335L;
 
@@ -25,15 +24,14 @@ public class CommWithdrawalPageController extends DefaultController {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 
 		String communityId = req.getParameter("communityId");
+		String clubId = req.getParameter("clubId");
+		String email = SessionManager.getInstance(req).getLoginEmail();
 		
-		CommunityService communityService = NamooClubServiceFactory.getInstance().getCommunityService();
-		Community community = communityService.findCommunity(communityId);
+		ClubService clubService = NamooClubServiceFactory.getInstance().getClubService();
+		clubService.withdrawClub(communityId, clubId, email);
 		
-		req.setAttribute("community", community);
-		//
-		String message = "["+community.getName()+"] 에서 탈퇴신청 하시겠습니까?";
-		String linkURL = "/community/withdrawal/process.do?communityId=" + communityId; 
-		
-		PageTranfer.getInstance(req, resp).confirm(message, linkURL);
+		String message = "클럽 탈퇴신청이 접수되었습니다.";
+		String linkURL = "/club/main.do?communityId=" + communityId; 
+		PageTranfer.getInstance(req, resp).information(message, linkURL);
 	}
 }

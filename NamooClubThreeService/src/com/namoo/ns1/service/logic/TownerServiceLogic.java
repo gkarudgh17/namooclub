@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.namoo.ns1.data.EntityManager;
 import com.namoo.ns1.service.facade.TownerService;
-import com.namoo.ns1.service.logic.exception.NamooRuntimeException;
+import com.namoo.ns1.service.shared.exception.NamooRuntimeException;
 
 import dom.entity.Community;
 import dom.entity.SocialPerson;

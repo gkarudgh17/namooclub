@@ -14,9 +14,11 @@ public class Community implements Identifiable {
 	private String name;
 	private String description;
 	private Date openDate;
+	private List<Category> clubCategories;
 	
 	private CommunityManager manager;
 	private List<CommunityMember> members;
+	private List<Club> clubs;
 
 	//--------------------------------------------------------------------------
 	// constructors
@@ -32,13 +34,97 @@ public class Community implements Identifiable {
 		this.id = id;
 		this.name = communityName;
 		this.description = description;
-		this.members = new ArrayList<CommunityMember>();
 		this.openDate = new Date();
 		
+		this.members = new ArrayList<CommunityMember>();
+		this.clubs = new ArrayList<Club>();
+		this.clubCategories = new ArrayList<Category>();
+		
 		setManager(admin);
-		addMember(admin);
+		addMember(admin, MembershipState.Active);
+		
+	}
+	
+	//--------------------------------------------------------------------------
+	// methods
+
+	public CommunityMember findMember(String email) {
+		//
+		for (CommunityMember member : members) {
+			if(member.getEmail().equals(email)) {
+				return member;
+			};
+		}
+		return null;
+	}
+	
+	public void setManager(SocialPerson rolePerson){
+		//
+		CommunityManager manager = new CommunityManager(id, rolePerson);
+		this.manager = manager;
 	}
 
+	public void addMember(SocialPerson rolePerson){
+		//
+		CommunityMember member = new CommunityMember(id, rolePerson);
+		this.members.add(member);
+	}
+	
+	public void addMember(SocialPerson rolePerson, MembershipState state){
+		//
+		CommunityMember member = new CommunityMember(id, rolePerson);
+		member.setState(state);
+		this.members.add(member);
+	}
+
+	public void addClub(Club club) {
+		// 
+		this.clubs.add(club);
+		
+	}
+
+	public void removeMember(String email) {
+		// 
+		CommunityMember found = null;
+		for (CommunityMember member : members) {
+			if (member.getEmail().equals(email)) {
+				found = member;
+			}
+		}
+		if (found != null) {
+			members.remove(found);
+		}
+	}
+	
+	public void removeClub(String clubId) {
+		// 
+		Club found = null;
+		for (Club club : clubs) {
+			if (club.getId().equals(clubId)) {
+				found = club;
+				break;
+			}
+		}
+		if (found != null) {
+			clubs.remove(found);
+		}
+	}	
+
+	public void addClubCategory(Category category) {
+		//
+		this.clubCategories.add(category);
+	}
+	
+	public Category findClubCategoryById(String categoryId) {
+		// 
+		for (Category category : clubCategories) {
+			if (category.getId().equals(categoryId)) {
+				return category;
+			}
+		}
+		return null;
+	}
+	
 	//--------------------------------------------------------------------------
 	// getter/setter
 	
@@ -78,56 +164,21 @@ public class Community implements Identifiable {
 		this.openDate = openDate;
 	}
 	
-	//--------------------------------------------------------------------------
-	// public methods
-	
-	public CommunityMember findMember(String email) {
-		//
-		for (CommunityMember member : members) {
-			if(member.getEmail().equals(email)) {
-				return member;
-			};
-		}
-		return null;
+	public List<Club> getClubs() {
+		return clubs;
 	}
 	
-	/**
-	 * 
-	 * @param rolePerson
-	 */
-	public void setManager(SocialPerson rolePerson){
-		//
-		CommunityManager manager = new CommunityManager(name, rolePerson);
-		this.manager = manager;
+	public List<Category> getClubCategories() {
+		return clubCategories;
 	}
 
-	/**
-	 * 
-	 * @param rolePerson
-	 */
-	public void addMember(SocialPerson rolePerson){
-		//
-		CommunityMember member = new CommunityMember(name, rolePerson);
-		this.members.add(member);
-	}
+	//--------------------------------------------------------------------------
+	// override
 
 	@Override
 	public String getOId() {
 		// 
 		return id;
-	}
-
-	public void removeMember(String email) {
-		// 
-		CommunityMember found = null;
-		for (CommunityMember member : members) {
-			if (member.getEmail().equals(email)) {
-				found = member;
-			}
-		}
-		if (found != null) {
-			members.remove(found);
-		}
 	}
 
 	@Override

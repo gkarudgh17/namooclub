@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.namoo.ns1.data.EntityManager;
 import com.namoo.ns1.service.facade.CommunityService;
-import com.namoo.ns1.service.logic.exception.NamooExceptionFactory;
+import com.namoo.ns1.service.shared.exception.NamooExceptionFactory;
 import com.namoo.ns1.service.util.IdGenerator;
 
 import dom.entity.Community;
 import dom.entity.CommunityMember;
+import dom.entity.MembershipState;
 import dom.entity.SocialPerson;
 
 public class CommunityServiceLogic implements CommunityService {
@@ -21,7 +22,7 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 	
 	@Override
-	public void registCommunity(String communityName, String description, String adminName, String email, String password) {
+	public String registCommunity(String communityName, String description, String adminName, String email, String password) {
 		//
 		if (em.find(Community.class, communityName) != null) {
 			throw NamooExceptionFactory.createRuntime("이미 존재하는 커뮤니티입니다.");
@@ -36,10 +37,12 @@ public class CommunityServiceLogic implements CommunityService {
 				
 		Community community = new Community(id, communityName, description, admin);
 		em.store(community);
+		
+		return id;
 	}
 
 	@Override
-	public void registCommunity(String communityName, String description, String email) {
+	public String registCommunity(String communityName, String description, String email) {
 		//
 		if (em.find(Community.class, communityName) != null) {
 			throw NamooExceptionFactory.createRuntime("이미 존재하는 커뮤니티입니다.");
@@ -54,6 +57,8 @@ public class CommunityServiceLogic implements CommunityService {
 		Community community = new Community(id, communityName, description, towner);
 		
 		em.store(community);
+		
+		return id;
 	}
 
 	private SocialPerson createPerson(String name, String email, String password) {
@@ -103,6 +108,10 @@ public class CommunityServiceLogic implements CommunityService {
 			throw NamooExceptionFactory.createRuntime("존재하지 않는 주민입니다.");
 		}
 		
+		// 이미 존재하는 회원인 경우 탈퇴처리 후 재가입
+		if (community.findMember(email) != null) {
+			community.removeMember(email);
+		}
 		community.addMember(towner);
 		em.store(community);
 	}
@@ -160,33 +169,35 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public List<Community> findBelongCommunities(String email) {
+	public List<Community> findJoinedCommunities(String email) {
 		// 
 		List<Community> commnities = em.findAll(Community.class);
 		if (commnities == null) return null;
 		
-		List<Community> belongs = new ArrayList<>();
+		List<Community> joined = new ArrayList<>();
 		for (Community community : commnities) {
-			if (community.findMember(email) != null) {
-				belongs.add(community);
+			CommunityMember member = community.findMember(email);
+			if (member != null && member.getState() != MembershipState.Closed) {
+				joined.add(community);
 			}
 		}
-		return belongs;
+		return joined;
 	}
 	
 	@Override
-	public List<Community> findNotBelongCommunities(String email) {
+	public List<Community> findUnjoinedCommunities(String email) {
 		// 
 		List<Community> commnities = em.findAll(Community.class);
 		if (commnities == null) return null;
 		
-		List<Community> notBelongs = new ArrayList<>();
+		List<Community> unjoined = new ArrayList<>();
 		for (Community community : commnities) {
-			if (community.findMember(email) == null) {
-				notBelongs.add(community);
+			CommunityMember member = community.findMember(email);
+			if (member == null || member.getState() == MembershipState.Closed) {
+				unjoined.add(community);
 			}
 		}
-		return notBelongs;
+		return unjoined;
 	}
 
 	@Override
@@ -205,7 +216,7 @@ public class CommunityServiceLogic implements CommunityService {
 	}
 
 	@Override
-	public void withdrawalCommunity(String communityId, String email) {
+	public void withdrawCommunity(String communityId, String email) {
 		//
 		Community community = em.find(Community.class, communityId);
 		if (community == null) {
@@ -220,4 +231,19 @@ public class CommunityServiceLogic implements CommunityService {
 		em.store(community);
 	}
 
+	@Override
+	public void modifyCommunity(Community community) {
+		// 
+		em.store(community);
+	}
+
+	@Override
+	public void updateCommunityMemberState(String communityId, String email, MembershipState state) {
+		// 
+		Community community = em.find(Community.class, communityId);
+		CommunityMember member = community.findMember(email);
+		member.setState(state);
+		
+		em.store(community);
+	}
 }

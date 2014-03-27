@@ -2,41 +2,26 @@ package dom.entity;
 
 import com.namoo.ns1.common.Identifiable;
 
-public class CommunityMember implements Identifiable {
-
+public class CommunityMember extends Membership implements Identifiable {
+	//
 	private static final long serialVersionUID = -876480131774545678L;
 	
-	private String communityName;
-	private SocialPerson rolePerson;
+	private String communityId;
 
 	//--------------------------------------------------------------------------
 	// constructor
 	
-	/**
-	 * 
-	 * @param rolePerson
-	 */
-	public CommunityMember(String communityName, SocialPerson rolePerson){
+	public CommunityMember(String communityId, SocialPerson rolePerson){
 		//
-		this.communityName = communityName;
-		this.rolePerson = rolePerson;
+		super(rolePerson);
+		this.communityId = communityId;
+		
+		setState(MembershipState.Requested);
 	}
 	
 	//--------------------------------------------------------------------------
-	// getter/setter
-	
-	public String getName() {
-		return rolePerson.getName();
-	}
-	
-	public String getEmail() {
-		return rolePerson.getEmail();
-	}
 
-	@Override
-	public String getOId() {
-		// 
-		return communityName + "|" + rolePerson.getEmail();
+	public String getCommunityId() {
+		return communityId;
 	}
-
 }

@@ -2,39 +2,46 @@ package com.namoo.ns1.service.facade;
 
 import java.util.List;
 
-import com.namoo.ns1.service.logic.exception.NamooRuntimeException;
+import com.namoo.ns1.service.shared.exception.NamooRuntimeException;
 
 import dom.entity.Community;
 import dom.entity.CommunityMember;
+import dom.entity.MembershipState;
 
 public interface CommunityService {
 
 	/**
 	 * [주민으로 등록되지 않은 경우] 커뮤니티 개설
-	 * 
-	 * 주민 가입을 처리하고 나서 커뮤니티를 개설한다.
-	 * 이미 존재하는 주민인 경우 예외가 발생한다.
+	 * <pre>
+	 * 	주민 가입을 처리하고 나서 커뮤니티를 개설한다.
+	 * 	이미 존재하는 주민인 경우 예외가 발생한다.
+	 * </pre>
 	 * @param communityName
 	 * @param description
 	 * @param adminName
 	 * @param email
 	 * @param password
+	 * @return 커뮤니티 ID
+	 * 
+	 * @throws NamooRuntimeException
 	 */
-	public void registCommunity(String communityName, String description, String adminName, String email, String password);
+	public String registCommunity(String communityName, String description, String adminName, String email, String password);
 
 	/**
 	 * [주민으로 등록된 경우] 커뮤니티 개설
-	 * 
-	 * 이미 주민으로 가입되어 있는 경우 이메일만 필요하다.
-	 * 존재하지 않는 주민인 경우 예외가 발생한다. 
+	 * <pre>
+	 * 	이미 주민으로 가입되어 있는 경우 이메일만 필요하다.
+	 * 	존재하지 않는 주민인 경우 예외가 발생한다.
+	 * </pre> 
 	 * 
 	 * @param communityName
 	 * @param description
 	 * @param email
+	 * @return 커뮤니티 ID
 	 * 
 	 * @throws NamooRuntimeException
 	 */
-	public void registCommunity(String communityName, String description, String email);
+	public String registCommunity(String communityName, String description, String email);
 
 	/**
 	 * 
@@ -111,7 +118,7 @@ public interface CommunityService {
 	 * @param email
 	 * @return
 	 */
-	public List<Community> findBelongCommunities(String email);
+	public List<Community> findJoinedCommunities(String email);
 	
 	/**
 	 * 미가입된 커뮤니티 목록조회
@@ -119,7 +126,7 @@ public interface CommunityService {
 	 * @param email
 	 * @return
 	 */
-	public List<Community> findNotBelongCommunities(String email);
+	public List<Community> findUnjoinedCommunities(String email);
 	
 	/**
 	 * 자신이 관리하는 커뮤니티 목록조회
@@ -135,6 +142,22 @@ public interface CommunityService {
 	 * @param communityId
 	 * @param email
 	 */
-	public void withdrawalCommunity(String communityId, String email);
+	public void withdrawCommunity(String communityId, String email);
+	
+	/**
+	 * 커뮤니티 멤버의 상태를 업데이트한다.
+	 * 
+	 * @param communityId
+	 * @param email
+	 * @param state
+	 */
+	public void updateCommunityMemberState(String communityId, String email, MembershipState state);
+
+	/**
+	 * 커뮤티티정보를 수정한다.
+	 * 
+	 * @param community
+	 */
+	public void modifyCommunity(Community community);
 
 }

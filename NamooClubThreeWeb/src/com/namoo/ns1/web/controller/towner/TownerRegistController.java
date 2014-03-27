@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.namoo.ns1.service.facade.TownerService;
 import com.namoo.ns1.service.factory.NamooClubServiceFactory;
-import com.namoo.ns1.service.logic.exception.NamooExceptionFactory;
+import com.namoo.ns1.service.shared.exception.NamooExceptionFactory;
 import com.namoo.ns1.web.controller.common.DefaultController;
 import com.namoo.ns1.web.controller.common.PageTranfer;
 
