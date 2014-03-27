@@ -1,4 +1,4 @@
-package com.namoo.ns1.web.controller.community;
+package com.namoo.ns1.web.controller.club;
 
 import java.io.IOException;
 
@@ -15,9 +15,9 @@ import com.namoo.ns1.web.session.LoginRequired;
 
 import dom.entity.Community;
 
-@WebServlet("/community/withdrawal/confirm.do")
+@WebServlet("/club/open/form.do")
 @LoginRequired
-public class CommWithdrawalPageController extends DefaultController {
+public class ClubOpenPageController extends DefaultController {
 	//
 	private static final long serialVersionUID = 8075594201606793335L;
 
@@ -28,12 +28,8 @@ public class CommWithdrawalPageController extends DefaultController {
 		
 		CommunityService communityService = NamooClubServiceFactory.getInstance().getCommunityService();
 		Community community = communityService.findCommunity(communityId);
-		
 		req.setAttribute("community", community);
-		//
-		String message = "["+community.getName()+"] 에서 탈퇴신청 하시겠습니까?";
-		String linkURL = "/community/withdrawal/process.do?communityId=" + communityId; 
-		
-		PageTranfer.getInstance(req, resp).confirm(message, linkURL);
+
+		PageTranfer.getInstance(req, resp).forwardTo("/WEB-INF/views/club/open.jsp");
 	}
 }

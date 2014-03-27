@@ -11,5 +11,6 @@ public interface TownerService {
 	void removeTowner(String email);
 	SocialPerson findTowner(String email);
 	List<SocialPerson> findAllTowner();
+	void modifyTowner(SocialPerson towner);
 	
 }

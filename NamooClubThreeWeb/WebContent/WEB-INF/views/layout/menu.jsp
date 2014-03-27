@@ -12,21 +12,15 @@
         </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${ctx}/community/main.do"">커뮤니티 홈</a></li>
-                <li><a href="#">인기 커뮤니티</a></li>
-                <li><a href="#">랭킹</a></li>
-                <li><a href="#">공지사항</a></li>
+                <li class="active"><a href="${ctx}/community/main.do">커뮤니티 홈</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${ctx}/towner/logout.do">로그아웃 [${loginTowner.email}]</a></li>
+                <li><a href="${ctx}/towner/logout.do">로그아웃 [ ${loginTowner.name} ]</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">관리 <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">커뮤니티 관리센터</a></li>
-                        <li><a href="#">클럽 관리센터</a></li>
-                        <li><a href="#">팀 관리센터</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">홍보</a></li>
+                        <li><a href="${ctx}/management/club/list.do">클럽 관리</a></li>
+                        <li><a href="${ctx}/management/member/list.do">회원 관리</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

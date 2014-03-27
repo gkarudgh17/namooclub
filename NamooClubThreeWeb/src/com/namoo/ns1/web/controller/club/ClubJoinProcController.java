@@ -1,4 +1,4 @@
-package com.namoo.ns1.web.controller.community;
+package com.namoo.ns1.web.controller.club;
 
 import java.io.IOException;
 
@@ -7,16 +7,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.namoo.ns1.service.facade.CommunityService;
+import com.namoo.ns1.service.facade.ClubService;
 import com.namoo.ns1.service.factory.NamooClubServiceFactory;
 import com.namoo.ns1.web.controller.common.DefaultController;
 import com.namoo.ns1.web.controller.common.PageTranfer;
 import com.namoo.ns1.web.session.LoginRequired;
 import com.namoo.ns1.web.session.SessionManager;
 
-@WebServlet("/community/join.do")
+@WebServlet("/club/join/process.do")
 @LoginRequired
-public class CommJoinController extends DefaultController {
+public class ClubJoinProcController extends DefaultController {
 	//
 	private static final long serialVersionUID = 8075594201606793335L;
 
@@ -24,13 +24,14 @@ public class CommJoinController extends DefaultController {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 
 		String communityId = req.getParameter("communityId");
+		String clubId = req.getParameter("clubId");
 		String email = SessionManager.getInstance(req).getLoginEmail();
 		
-		CommunityService communityService = NamooClubServiceFactory.getInstance().getCommunityService();
-		communityService.joinAsMember(communityId, email);
+		ClubService clubService = NamooClubServiceFactory.getInstance().getClubService();
+		clubService.joinAsClub(communityId, clubId, email);
 		
-		String message = "커뮤니티 멤버로 가입되었습니다.";
-		String linkURL = "/community/main.do"; 
+		String message = "클럽 회원가입이 완료되었습니다.";
+		String linkURL = "/club/main.do?communityId=" + communityId; 
 		PageTranfer.getInstance(req, resp).information(message, linkURL);
 	}
 }

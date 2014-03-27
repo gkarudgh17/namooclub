@@ -2,43 +2,28 @@ package dom.entity;
 
 import com.namoo.ns1.common.Identifiable;
 
-public class CommunityManager implements Identifiable {
+public class CommunityManager extends Membership implements Identifiable {
 
 	private static final long serialVersionUID = -1543226812538269293L;
 	
-	private String communityName;
-	private SocialPerson rolePerson;
+	private String communityId;
 
 	//--------------------------------------------------------------------------
 	// constructor
 	
-	/**
-	 * 
-	 * @param rolePerson
-	 */
-	public CommunityManager(String communityName, SocialPerson rolePerson){
+	public CommunityManager(String communityId, SocialPerson rolePerson){
 		//
-		this.communityName = communityName;
-		this.rolePerson = rolePerson;
+		super(rolePerson);
+		this.communityId = communityId;
+
+		// 커뮤니티 관리자는 생성즉시 가입상태로 세팅
+		setState(MembershipState.Active);
 	}
 	
 	//--------------------------------------------------------------------------
 	// getter/setter
 	
-	public String getName() {
-		//
-		return rolePerson.getName();
+	public String getCommunityId() {
+		return communityId;
 	}
-
-	public String getEmail() {
-		// 
-		return rolePerson.getEmail();
-	}
-	
-	@Override
-	public String getOId() {
-		// 
-		return communityName + "|" + rolePerson.getEmail();
-	}
-
 }

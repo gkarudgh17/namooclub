@@ -36,7 +36,7 @@
 
             <div class="well">
                 <p>나와 같은 관심사를 가진 멤버를 모집하고 열심히 운영하여 커뮤니티를 성장시켜 보세요.</p>
-                <form class="form-horizontal" action="${ctx}/community/open.do" method="post">
+                <form class="form-horizontal" action="${ctx}/community/open/process.do" method="post">
                     <fieldset>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">커뮤니티명</label>
@@ -53,6 +53,18 @@
                                 <span class="help-block">커뮤니티를 소개하는 대표문구를 입력해 주세요. 커뮤니티 홈화면에 입력하신 문구가 출력됩니다.</span>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">클럽 카테고리</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" name="categories" class="form-control" placeholder="카테고리 1" required>
+                                <input type="text" name="categories" class="form-control" placeholder="카테고리 2">
+                                <input type="text" name="categories" class="form-control" placeholder="카테고리 3">
+                                <input type="text" name="categories" class="form-control" placeholder="카테고리 4">
+                                <input type="text" name="categories" class="form-control" placeholder="카테고리 5">
+                                <input type="text" name="categories" class="form-control" placeholder="카테고리 6">
+                            </div>
+                        </div>                        
                         <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-2">
                                 <button type="submit" class="btn btn-primary">확인</button>

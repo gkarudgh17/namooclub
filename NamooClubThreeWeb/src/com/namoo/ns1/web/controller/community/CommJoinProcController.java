@@ -12,12 +12,11 @@ import com.namoo.ns1.service.factory.NamooClubServiceFactory;
 import com.namoo.ns1.web.controller.common.DefaultController;
 import com.namoo.ns1.web.controller.common.PageTranfer;
 import com.namoo.ns1.web.session.LoginRequired;
+import com.namoo.ns1.web.session.SessionManager;
 
-import dom.entity.Community;
-
-@WebServlet("/community/withdrawal/confirm.do")
+@WebServlet("/community/join/process.do")
 @LoginRequired
-public class CommWithdrawalPageController extends DefaultController {
+public class CommJoinProcController extends DefaultController {
 	//
 	private static final long serialVersionUID = 8075594201606793335L;
 
@@ -25,15 +24,13 @@ public class CommWithdrawalPageController extends DefaultController {
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 
 		String communityId = req.getParameter("communityId");
+		String email = SessionManager.getInstance(req).getLoginEmail();
 		
 		CommunityService communityService = NamooClubServiceFactory.getInstance().getCommunityService();
-		Community community = communityService.findCommunity(communityId);
+		communityService.joinAsMember(communityId, email);
 		
-		req.setAttribute("community", community);
-		//
-		String message = "["+community.getName()+"] 에서 탈퇴신청 하시겠습니까?";
-		String linkURL = "/community/withdrawal/process.do?communityId=" + communityId; 
-		
-		PageTranfer.getInstance(req, resp).confirm(message, linkURL);
+		String message = "커뮤니티 회원가입요청이 접수되었습니다.";
+		String linkURL = "/community/main.do"; 
+		PageTranfer.getInstance(req, resp).information(message, linkURL);
 	}
 }

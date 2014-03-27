@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="./index.html">나무커뮤니티</a>
+            <a class="navbar-brand" href="${ctx}/towner/login.xhtml">나무커뮤니티</a>
         </div>
     </div>
 </div>
@@ -76,6 +76,25 @@
 
                             <div class="col-lg-10">
                                 <input type="password" class="form-control" name="inputPassword2" placeholder="비밀번호 확인" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">생년월일</label>
+
+                            <div class="col-lg-10">
+                                <input type="date" class="form-control" name="inputBirthDate" placeholder="생년월일 (YYYY-MM-DD)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">성별</label>
+
+                            <div class="col-lg-10">
+                                <div class="radio">
+                                    <label><input type="radio" name="inputGender" value="M" checked>남자</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="inputGender" value="F">여자</label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">

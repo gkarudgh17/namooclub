@@ -1,5 +1,7 @@
 package dom.entity;
 
+import java.sql.Date;
+
 import com.namoo.ns1.common.Identifiable;
 
 public class SocialPerson implements Identifiable {
@@ -9,6 +11,8 @@ public class SocialPerson implements Identifiable {
 	private String name;
 	private String email;
 	private String password;
+	private Date birthDate;
+	private Gender gender;
 
 	public SocialPerson(){
 		//
@@ -45,6 +49,22 @@ public class SocialPerson implements Identifiable {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
 	@Override

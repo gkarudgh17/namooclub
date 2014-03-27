@@ -45,15 +45,22 @@
                     </div>
 
                     <ul class="list-group">
-                        <c:forEach var="community" items="${belongList}">
+                        <c:set var="count" value="0" />
+                        <c:forEach var="community" items="${joinedList}">
+                            <c:if test="${community.membershipState != 'Closed'}">
+                            <c:set var="count" value="${count + 1}" />
+                            
                             <li class="list-group-item">
-                                <span class="badge"><fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
-                                <h4><a href="${ctx}/club/main.do?communityId=${community.id}">${community.name}</a></h4>
+                                <span class="badge" title="개설일자"><fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
+                                <h4><c:if test="${community.owned}"><span class="label label-info">관리자</span></c:if>
+                                  <c:if test="${community.joined && community.membershipState != 'Active'}"><span class="label label-warning">${community.membershipState.name}</span></c:if>
+                                  <a href="${ctx}/club/main.do?communityId=${community.id}">${community.name} (클럽:${community.countOfClubs}, 회원:${community.countOfMembers})</a></h4>
                                 <p>${community.description}</p>
                                 <a href="${ctx}/community/withdrawal/confirm.do?communityId=${community.id}" class="btn btn-default btn-sm">멤버탈퇴 신청하기</a>
                             </li>
+                            </c:if>
                         </c:forEach>
-                        <c:if test="${empty belongList}">
+                        <c:if test="${count == 0}">
                             <li class="list-group-item">
                                 <p class="text-center">가입된 커뮤니티가 없습니다.</p>
                             </li>
@@ -68,15 +75,15 @@
                     </div>
 
                     <ul class="list-group">
-                        <c:forEach var="community" items="${notBelongList}">
+                        <c:forEach var="community" items="${unjoinedList}">
                             <li class="list-group-item">
-                                <span class="badge"><fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
-                                <h4><span class="label label-info">추천</span>&nbsp;${community.name}</h4>
+                                <span class="badge" title="개설일자"><fmt:formatDate value="${community.openDate}" pattern="yyyy-MM-dd"/></span>
+                                <h4><span class="label label-info">추천</span>&nbsp;${community.name} (클럽:${community.countOfClubs}, 회원:${community.countOfMembers})</h4>
                                 <p>${community.description}</p>
                                 <a href="${ctx}/community/join/confirm.do?communityId=${community.id}" class="btn btn-default btn-sm">멤버 가입하기</a>
                             </li>
                         </c:forEach>
-                        <c:if test="${empty notBelongList}">
+                        <c:if test="${empty unjoinedList}">
                             <li class="list-group-item">
                                 <p class="text-center">미가입된 커뮤니티가 없습니다.</p>
                             </li>

@@ -14,9 +14,11 @@ import com.namoo.ns1.web.controller.common.PageTranfer;
 import com.namoo.ns1.web.session.LoginRequired;
 import com.namoo.ns1.web.session.SessionManager;
 
-@WebServlet("/community/withdrawal.do")
+import dom.entity.MembershipState;
+
+@WebServlet("/community/withdrawal/process.do")
 @LoginRequired
-public class CommWithdrawalController extends DefaultController {
+public class CommWithdrawalProcController extends DefaultController {
 	//
 	private static final long serialVersionUID = 8075594201606793335L;
 
@@ -27,9 +29,9 @@ public class CommWithdrawalController extends DefaultController {
 		String email = SessionManager.getInstance(req).getLoginEmail();
 		
 		CommunityService communityService = NamooClubServiceFactory.getInstance().getCommunityService();
-		communityService.withdrawalCommunity(communityId, email);
+		communityService.updateCommunityMemberState(communityId, email, MembershipState.RequestWithdrawal);
 		
-		String message = "커뮤니티 탈퇴처리가 완료되었습니다.";
+		String message = "커뮤니티 탈퇴신청이 접수되었습니다.";
 		String linkURL = "/community/main.do"; 
 		PageTranfer.getInstance(req, resp).information(message, linkURL);
 	}

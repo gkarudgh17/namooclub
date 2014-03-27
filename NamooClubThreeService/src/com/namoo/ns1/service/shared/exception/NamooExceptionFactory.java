@@ -1,4 +1,4 @@
-package com.namoo.ns1.service.logic.exception;
+package com.namoo.ns1.service.shared.exception;
 
 public class NamooExceptionFactory {
 
