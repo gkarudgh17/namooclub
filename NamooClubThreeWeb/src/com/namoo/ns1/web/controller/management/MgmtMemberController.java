@@ -32,7 +32,7 @@ public class MgmtMemberController extends MgmtDefaultController {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 
-		super.process(req, resp);
+		super.process(req, resp); 
 
 		String communityId = req.getParameter("communityId");
 		String type = req.getParameter("type");

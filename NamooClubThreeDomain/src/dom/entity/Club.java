@@ -10,7 +10,7 @@ public class Club implements Identifiable {
 	//
 	private static final long serialVersionUID = 3066633976084014659L;
 	
-	private String id;
+	private String id; 
 	private String name;
 	private String description;
 	private Category category;

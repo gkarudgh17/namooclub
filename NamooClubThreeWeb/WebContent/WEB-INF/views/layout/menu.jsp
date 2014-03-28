@@ -28,7 +28,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">개인정보</a></li>
                         <li><a href="#">모바일 환경설정</a></li>
-                    </ul>
+                    </ul> 
                 </li>
             </ul>
         </div>
