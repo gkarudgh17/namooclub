@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -15,7 +15,15 @@
                 <li class="active"><a href="${ctx}/community/main.do">커뮤니티 홈</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${ctx}/towner/logout.do">로그아웃 [ ${loginTowner.name} ]</a></li>
+                <li>
+                  <c:choose>
+                    <c:when test="${loginTowner != null}">
+                      <a href="${ctx}/towner/logout.do">로그아웃 [ ${loginTowner.name} ]</a></li>
+                    </c:when>
+                    <c:otherwise>
+                      <a href="${ctx}/towner/login.xhtml">로그인</a></li>
+                    </c:otherwise>
+                  </c:choose>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">관리 <b class="caret"></b></a>
                     <ul class="dropdown-menu">

@@ -111,11 +111,11 @@
                                 </thead>
                                 <tbody>
                                 <c:set var="count" value="0" />
-                                <c:forEach var="club" items="${clubs}" varStatus="status"> 
+                                <c:forEach var="club" items="${clubs}"> 
                                   <c:if test="${club.state == 'Requested'}">
                                     <c:set var="count" value="${count+ 1}" />
                                     <tr>
-                                        <td class="text-center">${status.count}</td>
+                                        <td class="text-center">${count}</td>
                                         <td>${club.category}</td>
                                         <td>${club.name}</td>
                                         <td>${club.manager.name}(${club.manager.email})</td>
@@ -153,11 +153,11 @@
                                 </thead>
                                 <tbody>
                                 <c:set var="count" value="0" />
-                                <c:forEach var="club" items="${clubs}" varStatus="status"> 
+                                <c:forEach var="club" items="${clubs}"> 
                                   <c:if test="${club.state == 'RequestClose'}">
                                     <c:set var="count" value="${count+ 1}" />
                                     <tr>
-                                        <td class="text-center">${status.count}</td>
+                                        <td class="text-center">${count}</td>
                                         <td>${club.category}</td>
                                         <td>${club.name}</td>
                                         <td>${club.manager.name}(${club.manager.email})</td>

@@ -32,8 +32,9 @@ public class CommJoinPageController extends DefaultController {
 		req.setAttribute("community", community);
 		//
 		String message = community.getName() + " 회원으로 가입하시겠습니까?";
-		String linkURL = "/community/join/process.do?communityId=" + communityId; 
+		String confirmUrl = "/community/join/process.do?communityId=" + communityId;
+		String cancelUrl = "/community/main.do";
 		
-		PageTranfer.getInstance(req, resp).confirm(message, linkURL);
+		PageTranfer.getInstance(req, resp).confirm(message, confirmUrl, cancelUrl);
 	}
 }

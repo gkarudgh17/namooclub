@@ -71,8 +71,15 @@
         <p>${message}</p>
 
         <div class="row info-btn">
-            <a href="${linkURL}" class="btn btn-large btn-default">확인</a>
-            <button onclick="history.back();" class="btn btn-large btn-default">취소</button>
+            <a href="${confirmUrl}" class="btn btn-large btn-default">확인</a>
+            <c:choose>
+              <c:when test="${not empty cancelUrl}">
+                <a href="${cancelUrl}" class="btn btn-large btn-default">취소</a>
+              </c:when>
+              <c:otherwise>
+                <button onclick="history.back();" class="btn btn-large btn-default">취소</button>
+              </c:otherwise>
+            </c:choose>
         </div>
     </div>
 

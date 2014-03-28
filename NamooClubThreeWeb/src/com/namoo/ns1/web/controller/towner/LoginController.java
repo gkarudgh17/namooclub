@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.namoo.ns1.web.controller.common.DefaultController;
 import com.namoo.ns1.web.controller.common.PageTranfer;
 import com.namoo.ns1.web.session.SessionManager;
+import com.namoo.ns1.web.util.StringUtil;
 
 @WebServlet("/towner/login.do")
 public class LoginController extends DefaultController {
@@ -21,11 +22,16 @@ public class LoginController extends DefaultController {
 		// 
 		String email = req.getParameter("inputEmail");
 		String password = req.getParameter("inputPassword");
+		String redirectUrl = req.getParameter("redirectUrl");
 		
 		PageTranfer pageTransfer = PageTranfer.getInstance(req, resp);
 		SessionManager sessionManager = SessionManager.getInstance(req);
 		if (sessionManager.login(email, password)) {
 			//
+			if (!StringUtil.isEmpty(redirectUrl)) {
+				resp.sendRedirect(redirectUrl);
+				return;
+			}
 			pageTransfer.redirectTo("/community/main.do");
 		} else {
 			//

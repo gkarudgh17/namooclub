@@ -75,6 +75,7 @@
     <form class="form-signin" action="${ctx}/towner/login.do" method="post">
         <input type="text" class="form-control" name="inputEmail" placeholder="아이디" required>
         <input type="password" class="form-control" name="inputPassword" placeholder="비밀번호" required>
+        <input type="hidden" name="redirectUrl" value="${referer}" />
         <!-- 
         <label class="checkbox">
             <input type="checkbox" value="remember-me"> 아이디 기억하기

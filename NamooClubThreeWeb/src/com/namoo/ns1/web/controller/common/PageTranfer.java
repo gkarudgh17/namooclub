@@ -31,27 +31,36 @@ public class PageTranfer {
 		req.getRequestDispatcher(uri).forward(req, resp);
 	}
 	
-	public void information(String message, String linkURL) throws ServletException, IOException {
+	public void information(String message, String confirmUrl) throws ServletException, IOException {
 		//
 		req.setAttribute("message", message);
-		req.setAttribute("linkURL", req.getContextPath() + linkURL);
+		req.setAttribute("confirmUrl", req.getContextPath() + confirmUrl);
 		
 		req.getRequestDispatcher(INFO_PAGE).forward(req, resp);
 	}
 	
-	public void error(String message, String linkURL) throws ServletException, IOException {
+	public void error(String message, String confirmUrl) throws ServletException, IOException {
 		//
 		req.setAttribute("message", message);
-		req.setAttribute("linkURL", req.getContextPath() + linkURL);
+		req.setAttribute("confirmUrl", req.getContextPath() + confirmUrl);
 
 		req.getRequestDispatcher(ERROR_PAGE).forward(req, resp);
 	}
 	
-	public void confirm(String message, String linkURL) throws ServletException, IOException {
+	public void confirm(String message, String confirmUrl) throws ServletException, IOException {
 		//
 		req.setAttribute("message", message);
-		req.setAttribute("linkURL", req.getContextPath() + linkURL);
+		req.setAttribute("confirmUrl", req.getContextPath() + confirmUrl);
 
+		req.getRequestDispatcher(CONFIRM_PAGE).forward(req, resp);
+	}
+	
+	public void confirm(String message, String confirmUrl, String cancelUrl) throws ServletException, IOException {
+		//
+		req.setAttribute("message", message);
+		req.setAttribute("confirmUrl", req.getContextPath() + confirmUrl);
+		req.setAttribute("cancelUrl", req.getContextPath() + cancelUrl);
+		
 		req.getRequestDispatcher(CONFIRM_PAGE).forward(req, resp);
 	}
 

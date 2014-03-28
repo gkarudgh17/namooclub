@@ -15,14 +15,13 @@ import com.namoo.ns1.service.factory.NamooClubServiceFactory;
 import com.namoo.ns1.web.controller.common.DefaultController;
 import com.namoo.ns1.web.controller.common.PageTranfer;
 import com.namoo.ns1.web.controller.community.pres.PresCommunity;
-import com.namoo.ns1.web.session.LoginRequired;
 import com.namoo.ns1.web.session.SessionManager;
+import com.namoo.ns1.web.util.StringUtil;
 
 import dom.entity.Community;
 import dom.entity.CommunityMember;
 
 @WebServlet("/community/main.do")
-@LoginRequired
 public class CommunityMainController extends DefaultController {
 	//
 	private static final long serialVersionUID = 8075594201606793335L;
@@ -34,8 +33,15 @@ public class CommunityMainController extends DefaultController {
 		ClubService clubService = NamooClubServiceFactory.getInstance().getClubService();
 		
 		String email = SessionManager.getInstance(req).getLoginEmail();
-		List<Community> joined = communityService.findJoinedCommunities(email);
-		List<Community> unjoined = communityService.findUnjoinedCommunities(email);
+		List<Community> joined = null;
+		List<Community> unjoined = null;
+		
+		if (!StringUtil.isEmpty(email)) {
+			joined = communityService.findJoinedCommunities(email);
+			unjoined = communityService.findUnjoinedCommunities(email);
+		} else {
+			unjoined = communityService.findAllCommunities();
+		}
 		
 		List<PresCommunity> joinedList = new ArrayList<PresCommunity>();
 		if (joined != null) {
@@ -69,17 +75,19 @@ public class CommunityMainController extends DefaultController {
 		int countOfMembers = communityService.countMembers(community.getId());
 		presCommunity.setCountOfMembers(countOfMembers);
 		
-		
-		// 관리자 여부
-		if (community.getManager().getEmail().equals(email)) {
-			presCommunity.setOwned(true);
-		}
-		
-		// 멤버여부 및 상태 세팅
-		CommunityMember member = community.findMember(email);
-		if (member != null) {
-			presCommunity.setJoined(true);
-			presCommunity.setMembershipState(member.getState());
+		// 로그인된 경우만
+		if (!StringUtil.isEmpty(email)) {
+			// 관리자 여부
+			if (community.getManager().getEmail().equals(email)) {
+				presCommunity.setOwned(true);
+			}
+			
+			// 멤버여부 및 상태 세팅
+			CommunityMember member = community.findMember(email);
+			if (member != null) {
+				presCommunity.setJoined(true);
+				presCommunity.setMembershipState(member.getState());
+			}
 		}
 		return presCommunity;
 	}

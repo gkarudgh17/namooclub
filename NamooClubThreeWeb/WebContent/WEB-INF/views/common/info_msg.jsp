@@ -71,7 +71,7 @@
         <p>${message}</p>
 
         <div class="row info-btn">
-            <a href="${linkURL}" class="btn btn-large btn-default">확인</a>
+            <a href="${confirmUrl}" class="btn btn-large btn-default">확인</a>
         </div>
     </div>
 
