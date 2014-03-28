@@ -49,7 +49,6 @@ public class Club implements Identifiable {
 	private void addMember(SocialPerson admin, MembershipState state) {
 		// 
 		this.members.add(new ClubMember(id, admin, state));
-		System.out.println(this.members);
 	}
 	
 	public void addManager(SocialPerson admin) {
